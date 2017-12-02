@@ -12,8 +12,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          <span>Last Rnd: </span>{this.props.test || 'none'}<br/><br/>
-          <a onClick={() => this.props.onClick(Math.random())}>Click me!</a>
+          <span>Current POS: {this.props.pos}</span><br/>
+          <a onClick={this.props.left}>Move LEFT</a><br/>
+          <a onClick={this.props.right}>Move RIGHT</a><br/>
         </p>
       </div>
     );
@@ -21,6 +22,9 @@ class App extends Component {
 }
 
 export default connect(
-  state => ({test: state.rnds[state.rnds.length-1]}),
-  dispatch => ({onClick: text => dispatch({type: 'ADD_RANDOM', text})})
+  state => ({pos: state.position}),
+  dispatch => ({
+    left: () => dispatch({type: 'MOVE_LEFT'}),
+    right: () => dispatch({type: 'MOVE_RIGHT'})
+  })
 )(App);
