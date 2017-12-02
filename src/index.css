@@ -6,14 +6,28 @@ body {
   color: #eee;
 }
 
+.game-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
 #gui {
   background-color: #333;
   border: 1px solid #aaa;
+  flex: 1 0 auto;
+  max-width: 250px;
+  min-width: 200px;
+
+  /*align-items: center;*/
+  display: flex;
+  justify-content: center;
 }
 
 #game-container {
   background-color: #333;
   text-align: center;
+  flex: 2 0 auto;
+  margin: auto;
 }
 
 #game-container svg {

@@ -10,12 +10,9 @@ import {
 } from './grid'
 
 let initGame = (initialState) => {
-  let cellSize = 20
-  let width = 500
-  let height = 500
-  let gridOf = getCells({rows: width / cellSize, cols: height / cellSize})
-
-  let draw = SVG('game-container').size(width, height)
+  let {rows, cols, cellSize} = initialState.grid
+  let gridOf = getCells({rows, cols})
+  let draw = SVG('game-container').size(cols * cellSize, rows * cellSize)
 
   flow(
     drawCells(draw.rect.bind(draw), cellSize),

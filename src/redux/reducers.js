@@ -1,16 +1,23 @@
-const MOVE = 100
-const MIN = 0
-const MAX = 1000 - MOVE
+let initialGrid = {
+  cellSize: 80,
+  rows: 8,
+  cols: 10
+}
 
-let position = (state = 100, action) => {
+let gameState = (state = 'LOADING', action) => {
   switch (action.type) {
-    case 'MOVE_LEFT': return state - MOVE < MIN ? MIN : state - MOVE
-    case 'MOVE_RIGHT': return state + MOVE > MAX ? MAX : state + MOVE
-    default:
-      return state
+    case 'SET_STATE': return action.payload
+    default: return state
+  }
+}
+
+let grid = (state = initialGrid, action) => {
+  switch (action.type) {
+    default: return state
   }
 }
 
 export default {
-  position
+  gameState,
+  grid
 }
