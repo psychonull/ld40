@@ -58,10 +58,10 @@ describe('Grid', () => {
   describe('moveCellsIntoGrid', () => {
     it('should call move each cell by index position', () => {
       let cell = {move: jest.fn((x, y) => [x, y])}
-      let rects = moveCellsIntoGrid(gridOf(cell))
+      let rects = moveCellsIntoGrid(10, gridOf(cell))
       expect(rects).toEqual([
-        [[0, 0], [1, 0], [2, 0]],
-        [[0, 1], [1, 1], [2, 1]]
+        [[0, 0], [10, 0], [20, 0]],
+        [[0, 10], [10, 10], [20, 10]]
       ])
     })
   })
