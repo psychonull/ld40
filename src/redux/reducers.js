@@ -1,6 +1,6 @@
 const MOVE = 100
 const MIN = 0
-const MAX = 1000
+const MAX = 1000 - MOVE
 
 let position = (state = 100, action) => {
   switch (action.type) {

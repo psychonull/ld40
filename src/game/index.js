@@ -11,7 +11,8 @@ let handleChange = ({getState, dispatch}) => () => {
   console.log('handleChange!')
   console.log(getState())
 
-  rect.animate().move(getState().position)
+  // rect.fx.situation.stop()
+  rect.animate().x(getState().position)
 }
 
 export default store => {
