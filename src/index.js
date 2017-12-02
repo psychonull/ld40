@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import {Provider} from 'react-redux';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import registerServiceWorker from './registerServiceWorker'
+import {Provider} from 'react-redux'
 import configureStore from './redux/store'
 import game from './game';
 
-let store = configureStore();
+let store = configureStore()
 
 ReactDOM.render(
   <Provider store={store}>
@@ -15,6 +15,6 @@ ReactDOM.render(
   </Provider>, document.getElementById('gui')
 );
 
-game(store);
+game(store)
 
-registerServiceWorker();
+registerServiceWorker()
