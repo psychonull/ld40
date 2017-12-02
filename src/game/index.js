@@ -1,18 +1,32 @@
+import noop from 'lodash/noop'
+import flow from 'lodash/flow'
 import SVG from 'svg.js'
 
-let rect
+import {
+  getCells,
+  drawCells,
+  mapGrid,
+  moveCellsIntoGrid
+} from './grid'
+
 let initGame = (initialState) => {
-  // let viewport = document.getElementById('game-container')
-  let draw = SVG('game-container').size(1000, 300)
-  rect = draw.rect(initialState.position, 100).attr({fill: '#f06'})
+  let cellSize = 20
+  let width = 500
+  let height = 500
+  let gridOf = getCells({rows: width / cellSize, cols: height / cellSize})
+
+  let draw = SVG('game-container').size(width, height)
+
+  flow(
+    drawCells(draw.rect.bind(draw), cellSize),
+    mapGrid(cell => cell.fill('#f06').stroke('#333')),
+    moveCellsIntoGrid(cellSize)
+  )(gridOf(noop()))
 }
 
 let handleChange = ({getState, dispatch}) => () => {
   console.log('handleChange!')
   console.log(getState())
-
-  // rect.fx.situation.stop()
-  rect.animate().x(getState().position)
 }
 
 export default store => {
