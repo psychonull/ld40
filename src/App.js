@@ -11,10 +11,10 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h1 className='App-title'>Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          <span>Current POS: {this.props.pos}</span><br/>
-          <a onClick={this.props.left}>Move LEFT</a><br/>
-          <a onClick={this.props.right}>Move RIGHT</a><br/>
+        <p className='App-intro'>
+          <span>Current POS: {this.props.pos}</span><br />
+          <a onClick={this.props.left}>Move LEFT</a><br />
+          <a onClick={this.props.right}>Move RIGHT</a><br />
         </p>
       </div>
     )
