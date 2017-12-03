@@ -34,23 +34,10 @@ export const pointInSquare = (p, rect, size) =>
 export const getCells = curry(({rows, cols}, value) => times(rows, () => times(cols, constant(value))))
 export const mapGrid = curry((fn, cells) => cells.map((rows, y) => rows.map((cell, x) => fn(cell, x, y))))
 
-export const mapPosition = curry((cellSize, {x, y}) => ({x: x / cellSize, y: y / cellSize}))
-
-export const mapPosition2 = (cellSize, cells, point) => {
-  let pos = {}
-
-  cells.forEach((rows, y) => {
-    let cy = y * cellSize
-    rows.forEach((cell, x) => {
-      let cx = x * cellSize
-      if (pointInSquare(point, {x: cx, y: cy}, cellSize)) {
-        pos = {x: cx / cellSize, y: cy / cellSize}
-      }
-    })
-  })
-
-  return pos
-}
+export const mapPosition = (cellSize, {x, y}) => ({
+  x: Math.floor(x / cellSize),
+  y: Math.floor(y / cellSize)
+})
 
 export const findPath = curry((from, to, cells) => {
   let finder = new PF.BestFirstFinder()
@@ -60,6 +47,22 @@ export const findPath = curry((from, to, cells) => {
 
 export const getCenterCell = (x, y, size) => ({cx: x + size / 2, cy: y + size / 2})
 export const getStringPoints = (points = []) => points.reduce((all, [x, y]) => `${all} ${x},${y}`, '')
+
+export const resolveEventPosition = (event, target) => {
+  let {x, y} = target.getBoundingClientRect()
+  let dx = 0
+  let dy = 0
+
+  if (event.pageX || event.pageY) {
+    dx = event.pageX
+    dy = event.pageY
+  } else if (event.clientX || event.clientY) {
+    dx = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft
+    dy = event.clientY + document.body.scrollTop + document.documentElement.scrollTop
+  }
+
+  return {x: dx - x, y: dy - y}
+}
 
 // //////////////////////////////////////////////
 // Selectors

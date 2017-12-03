@@ -2,20 +2,14 @@ import {connect} from 'react-redux'
 import isEqual from 'lodash/isEqual'
 import get from 'lodash/get'
 import GridComponent from './GridComponent'
-import {mapPosition, mapGrid, findPath, selectGridCellStates} from './grid'
+import {mapPosition, mapGrid, findPath, selectGridCellStates, resolveEventPosition} from './grid'
 
 let getControls = getState => getState().controls
 let isDragActive = getState => getControls(getState).gridMouseDown
 
-let getCellPosition = (e, getState) => {
-  let cellEl = e.target
-  if (!cellEl || cellEl.tagName.toLowerCase() !== 'rect') return {}
-  return mapPosition(getState().grid.cellSize, {x: cellEl.getAttribute('x'), y: cellEl.getAttribute('y')})
-}
-
 let onMouseOver = e => (dispatch, getState) => {
   if (isDragActive(getState)) {
-    let payload = getCellPosition(e, getState)
+    let payload = mapPosition(getState().grid.cellSize, resolveEventPosition(e.nativeEvent, e.currentTarget))
 
     if (payload) {
       let {gridMouseStartAt, gridMouseAt} = getControls(getState)
@@ -30,7 +24,7 @@ let onMouseOver = e => (dispatch, getState) => {
 }
 
 let startDrag = e => (dispatch, getState) => {
-  let payload = getCellPosition(e, getState)
+  let payload = mapPosition(getState().grid.cellSize, resolveEventPosition(e.nativeEvent, e.currentTarget))
   if (payload) {
     let cellStates = selectGridCellStates(getState())
     if (get(cellStates, `[${payload.y}][${payload.x}]`) === 1) {
@@ -42,7 +36,7 @@ let startDrag = e => (dispatch, getState) => {
 let cancelDrag = e => (dispatch, getState) => {
   if (isDragActive(getState)) {
     dispatch({type: 'GRID_MOUSE_UP'})
-    let payload = getCellPosition(e, getState)
+    let payload = mapPosition(getState().grid.cellSize, resolveEventPosition(e.nativeEvent, e.currentTarget))
     if (payload) {
       dispatch({type: 'GRID_MOUSE_DOWN_END', payload})
     }
