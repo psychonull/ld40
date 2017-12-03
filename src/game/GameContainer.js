@@ -9,7 +9,7 @@ export default class GameContainer extends Component {
     return (
       <div className='game-container'>
         <Input />
-        <Grid />
+        <Grid renderBelts />
         <Output />
       </div>
     )

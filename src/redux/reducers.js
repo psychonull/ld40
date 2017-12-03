@@ -11,7 +11,8 @@ let initialGrid = {
   def,
   cells: getCells(def.cells)({}),
   input: getCells(def.input)({shape: Shapes.Square}),
-  output: getCells(def.output)({})
+  output: getCells(def.output)({}),
+  belts: []
 }
 
 let initialGameState = {
@@ -36,12 +37,19 @@ let controls = (state = initialControls, action) => {
     case 'GRID_MOUSE_DOWN_START': return {...state, gridMouseDown: true, gridMouseStartAt: action.payload}
     case 'GRID_MOUSE_DOWN_MOVE': return {...state, gridMouseAt: action.payload}
     case 'GRID_MOUSE_DOWN_END': return {...state, gridMouseDown: false, gridMouseAt: action.payload}
+    case 'GRID_MOUSE_CLEAR_POSITIONS': return initialControls
     default: return state
   }
 }
 
 let grid = (state = initialGrid, action) => {
   switch (action.type) {
+    case 'GRID_SET_BELT': {
+      return {...state,
+        belts: [...state.belts, action.payload],
+        cells: mapGrid(cell => ({...cell, isPreBelt: false}))(state.cells)
+      }
+    }
     case 'GRID_UPDATE_PENDING_PATH': {
       let newState = mapGrid(cell => ({...cell, isPreBelt: false}))(state.cells)
       action.payload.forEach(([y, x]) => {

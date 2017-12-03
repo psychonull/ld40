@@ -19,8 +19,7 @@ export const GridCodes = {
   ...Shapes
 }
 
-// TODO: Remove this hardcode
-export const nextShape = current => current + 10 > 20 ? 10 : current + 10
+export const nextShape = current => current + 10 > 20 ? 10 : current + 10 // TODO: Remove this hardcode
 
 export const rectsCollide = (a, b) =>
   a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.height + a.y > b.y

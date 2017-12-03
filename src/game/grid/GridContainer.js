@@ -37,19 +37,17 @@ let cancelDrag = e => (dispatch, getState) => {
   if (isDragActive(getState)) {
     dispatch({type: 'GRID_MOUSE_UP'})
     let payload = mapPosition(getState().grid.cellSize, resolveEventPosition(e.nativeEvent, e.currentTarget))
-    if (payload) {
-      dispatch({type: 'GRID_MOUSE_DOWN_END', payload})
-    }
+    if (!payload) return
 
-    // TODO: Check store and apply Belt! or trash the current pendings
+    let {gridMouseStartAt} = getControls(getState)
 
-    /*
-    dispatch({type: 'GRID_SET_BELT', payload: path})
+    // TODO: Is a valid Belt?
+    dispatch({
+      type: 'GRID_SET_BELT',
+      payload: findPath(gridMouseStartAt, payload, mapGrid(() => 0)(getState().grid.cells))
+    })
 
-    // OR
-
-    dispatch({type: 'GRID_CLEAR_PENDING_BELT'})
-    */
+    dispatch({type: 'GRID_MOUSE_CLEAR_POSITIONS'})
   }
 }
 
