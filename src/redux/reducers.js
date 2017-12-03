@@ -1,4 +1,4 @@
-import {getCells, mapGrid} from '../game/grid/grid.js'
+import {getCells, mapGrid, Shapes, nextShape} from '../game/grid/grid.js'
 
 let def = {
   cells: {rows: 8, cols: 11},
@@ -10,7 +10,7 @@ let initialGrid = {
   cellSize: 80,
   def,
   cells: getCells(def.cells)({}),
-  input: getCells(def.input)({}),
+  input: getCells(def.input)({shape: Shapes.Square}),
   output: getCells(def.output)({})
 }
 
@@ -48,6 +48,13 @@ let grid = (state = initialGrid, action) => {
         newState[x][y] = {...newState[x][y], isPreBelt: true}
       })
       return {...state, cells: newState}
+    }
+    case 'GRID_NEXT_INPUT_SHAPE': {
+      return {...state,
+        input: mapGrid((inputCell, x, y) =>
+          action.payload.x === x && action.payload.y === y
+            ? {...inputCell, shape: nextShape(inputCell.shape)} : inputCell
+        )(state.input)}
     }
     default: return state
   }

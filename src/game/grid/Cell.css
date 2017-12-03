@@ -1,3 +1,7 @@
+.CellGroup {
+
+}
+
 .Cell {
   fill: #333;
   stroke: #555;
@@ -10,6 +14,11 @@
 }
 
 .Cell.canStart {
+  fill: rgba(252, 255, 178, 0.15);
+  cursor: crosshair;
+}
+
+.Cell.isFinish {
   fill: rgba(252, 255, 178, 0.15);
   cursor: crosshair;
 }
