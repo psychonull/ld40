@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Shapes} from './grid'
 import './Shape.css'
 
@@ -18,9 +17,4 @@ let ShapeComponent = ({shape, cx, cy, size}) =>
   </g>
 
 ShapeComponent.displayName = 'ShapeComponent'
-
-export default connect(
-  state => ({
-    cellSize: state.grid.cellSize
-  })
-)(ShapeComponent)
+export default ShapeComponent

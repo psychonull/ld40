@@ -68,8 +68,25 @@ let grid = (state = initialGrid, action) => {
   }
 }
 
+let initialFactory = {
+  paused: false,
+  stats: {runs: 0},
+  shapes: []
+}
+
+let factory = (state = initialFactory, action) => {
+  switch (action.type) {
+    case 'FACTORY_ADD_SHAPES': return {...state, shapes: [...state.shapes, ...action.payload]}
+    case 'FACTORY_UPDATE_SHAPES': return {...state, shapes: action.payload}
+    case 'FACTORY_CYCLE': return {...state, stats: {...state.stats, runs: state.stats.runs + 1}}
+    case 'FACTORY_RESET': return initialFactory
+    default: return state
+  }
+}
+
 export default {
   gameState,
   controls,
-  grid
+  grid,
+  factory
 }
