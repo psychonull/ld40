@@ -14,9 +14,17 @@ let initialGrid = {
   output: getCells(def.output)({})
 }
 
-let gameState = (state = 'LOADING', action) => {
+let initialGameState = {
+  status: 'PLAYING', // MAINMENU, PLAYING, LOADING
+  level: 0,
+  loadingProgress: 0
+}
+
+let gameState = (state = initialGameState, action) => {
   switch (action.type) {
     case 'SET_STATE': return action.payload
+    case 'START_GAME': return {...state, status: 'PLAYING'}
+    case 'NEXT_LEVEL': return {...state, status: 'PLAYING', level: state.level + 1}
     default: return state
   }
 }
