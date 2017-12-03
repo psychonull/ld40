@@ -3,7 +3,8 @@
 import {
   getCells,
   mapGrid,
-  mapPosition
+  mapPosition,
+  selectGridCellStates
 } from './grid'
 
 describe('Grid', () => {
@@ -42,5 +43,33 @@ describe('Grid', () => {
       expect(resolve({x: 10, y: 20})).toEqual({x: 1, y: 2})
       expect(resolve({x: 10, y: 10})).toEqual({x: 1, y: 1})
     })
+  })
+})
+
+describe('Selectors', () => {
+  let def = {
+    cells: {rows: 4, cols: 5},
+    input: {rows: 4, cols: 1},
+    output: {rows: 1, cols: 1}
+  }
+
+  let getState = () => ({
+    grid: {
+      cellSize: 80,
+      def,
+      cells: getCells(def.cells)({}),
+      input: getCells(def.input)({}),
+      output: getCells(def.output)({})
+    }
+  })
+
+  describe('selectGridCellStates', () => {
+    let result = selectGridCellStates(getState())
+    expect(result).toEqual([
+      [1, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0],
+      [1, 0, 0, 0, 0],
+      [1, 0, 0, 0, 5]
+    ])
   })
 })

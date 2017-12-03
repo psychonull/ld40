@@ -9,6 +9,11 @@
   fill: #444;
 }
 
+.Cell.canStart {
+  fill: rgba(252, 255, 178, 0.15);
+  cursor: crosshair;
+}
+
 .Cell.isPreBelt {
   fill: #484848;
 }

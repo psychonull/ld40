@@ -1,7 +1,8 @@
 import {connect} from 'react-redux'
 import isEqual from 'lodash/isEqual'
+import get from 'lodash/get'
 import GridComponent from './GridComponent'
-import {mapPosition, mapGrid, findPath} from './grid'
+import {mapPosition, mapGrid, findPath, selectGridCellStates} from './grid'
 
 let getControls = getState => getState().controls
 let isDragActive = getState => getControls(getState).gridMouseDown
@@ -31,7 +32,10 @@ let onMouseOver = e => (dispatch, getState) => {
 let startDrag = e => (dispatch, getState) => {
   let payload = getCellPosition(e, getState)
   if (payload) {
-    dispatch({type: 'GRID_MOUSE_DOWN_START', payload})
+    let cellStates = selectGridCellStates(getState())
+    if (get(cellStates, `[${payload.y}][${payload.x}]`) === 1) {
+      dispatch({type: 'GRID_MOUSE_DOWN_START', payload})
+    }
   }
 }
 
@@ -60,7 +64,8 @@ export default connect(state => {
   return {
     width: def.cells.cols * cellSize,
     height: def.cells.rows * cellSize,
-    cells
+    cells,
+    cellStates: selectGridCellStates(state)
   }
 }, dispatch => ({
   onMouseDown: e => dispatch(startDrag(e)),
