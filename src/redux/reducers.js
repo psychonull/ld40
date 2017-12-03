@@ -1,10 +1,17 @@
 import {getCells, mapGrid} from '../game/grid/grid.js'
 
+let def = {
+  cells: {rows: 8, cols: 11},
+  input: {rows: 3, cols: 1},
+  output: {rows: 1, cols: 1}
+}
+
 let initialGrid = {
   cellSize: 80,
-  rows: 8,
-  cols: 10,
-  cells: getCells({rows: 8, cols: 10})({})
+  def,
+  cells: getCells(def.cells)({}),
+  input: getCells(def.input)({}),
+  output: getCells(def.output)({})
 }
 
 let gameState = (state = 'LOADING', action) => {

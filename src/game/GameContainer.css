@@ -1,0 +1,29 @@
+
+.game-container {
+  /*background-color: #333;*/
+  text-align: center;
+  /* flex: 2 0 auto;*/
+  margin: auto;
+  display: flex;
+}
+
+.game-container svg {
+  border: 1px solid #888;
+}
+
+.game-container .Input,
+.game-container .Output {
+  /* border: none;*/
+}
+
+.game-container .Output {
+  align-self: flex-end;
+}
+
+.game-container .Input .Cell,
+.game-container .Output .Cell,
+.game-container .Input .Cell:hover,
+.game-container .Output .Cell:hover {
+  fill: #555;
+  stroke: #333;
+}

@@ -46,9 +46,6 @@ let cancelDrag = e => (dispatch, getState) => {
     // TODO: Check store and apply Belt! or trash the current pendings
 
     /*
-    let grid = new PF.Grid(getState().grid.cells)
-    var finder = new PF.AStarFinder()
-    var path = finder.findPath(startAt.x, startAt.y, payload.x, payload.y, grid)
     dispatch({type: 'GRID_SET_BELT', payload: path})
 
     // OR
@@ -59,10 +56,10 @@ let cancelDrag = e => (dispatch, getState) => {
 }
 
 export default connect(state => {
-  let {rows, cols, cellSize, cells} = state.grid
+  let {def, cellSize, cells} = state.grid
   return {
-    width: cols * cellSize,
-    height: rows * cellSize,
+    width: def.cells.cols * cellSize,
+    height: def.cells.rows * cellSize,
     cells
   }
 }, dispatch => ({
