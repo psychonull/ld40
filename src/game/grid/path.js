@@ -31,4 +31,4 @@ export const getSmoothPath = points => points.reduce((acc, e, i, a) => {
   }
 }, '')
 
-export const getLinePath = points => points.reduce((acc, e, i, a) => `${acc} ${e[0]},${e[1]}`, 'M')
+export const getLinePath = points => points.reduce((acc, [x, y]) => `${acc} ${x},${y}`, 'M')
