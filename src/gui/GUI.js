@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import './App.css'
+import './GUI.css'
 
-export class App extends Component {
+export class GUI extends Component {
   render () {
     return (
-      <div className='App'>
-        <p className='App-intro'>
+      <div className='GUI'>
+        <p className='GUI-intro'>
           [GUI]
         </p>
       </div>
@@ -20,4 +20,4 @@ export default connect(
     left: () => dispatch({type: 'MOVE_LEFT'}),
     right: () => dispatch({type: 'MOVE_RIGHT'})
   })
-)(App)
+)(GUI)

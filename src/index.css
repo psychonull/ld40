@@ -11,7 +11,7 @@ body {
   height: 100vh;
 }
 
-#gui {
+.GUI {
   background-color: #333;
   border: 1px solid #aaa;
   flex: 1 0 auto;
@@ -23,13 +23,13 @@ body {
   justify-content: center;
 }
 
-#game-container {
+.game-container {
   background-color: #333;
   text-align: center;
   flex: 2 0 auto;
   margin: auto;
 }
 
-#game-container svg {
+.game-container svg {
   border: 1px solid #888;
 }

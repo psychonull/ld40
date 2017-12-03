@@ -1,0 +1,18 @@
+.Cell {
+  fill: #333;
+  stroke: #555;
+  pointer-events: all;
+}
+
+.Cell:hover {
+  stroke: #777;
+  fill: #444;
+}
+
+.Cell.isPreBelt {
+  fill: yellow;
+}
+
+.Cell.isBelt {
+  fill: orange;
+}
