@@ -37,19 +37,23 @@ let initialControls = {gridMouseDown: false}
 
 let controls = (state = initialControls, action) => {
   switch (action.type) {
-    case 'GRID_MOUSE_DOWN': return {...state, gridMouseDown: true}
-    case 'GRID_MOUSE_UP': return {...state, gridMouseDown: false}
+    case 'GRID_MOUSE_DOWN_START': return {...state, gridMouseDown: true, gridMouseStartAt: action.payload}
+    case 'GRID_MOUSE_DOWN_MOVE': return {...state, gridMouseAt: action.payload}
+    case 'GRID_MOUSE_DOWN_END': return {...state, gridMouseDown: false, gridMouseAt: action.payload}
     default: return state
   }
 }
 
 let grid = (state = initialGrid, action) => {
   switch (action.type) {
+    case 'GRID_SET_PENDING': return {...state, cells: action.payload}
+    /*
     case 'GRID_SET_PENDING': return {...state,
       cells: mapGrid((cell, x, y) =>
         action.payload.x === x && action.payload.y === y ? {...cell, isPreBelt: true} : cell,
         state.cells)
     }
+    */
     default: return state
   }
 }
