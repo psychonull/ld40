@@ -46,6 +46,7 @@ export const findPath = curry((from, to, cells) => {
 
 export const getCenterCell = (x, y, size) => ({cx: x + size / 2, cy: y + size / 2})
 export const getStringPoints = (points = []) => points.reduce((all, [x, y]) => `${all} ${x},${y}`, '')
+export const getStringPath = points => points.reduce((acc, [x, y], i) => i > 0 ? `${acc} L ${x},${y}` : `M ${x},${y}`, '')
 
 export const resolveEventPosition = (event, target) => {
   let {x, y} = target.getBoundingClientRect()
