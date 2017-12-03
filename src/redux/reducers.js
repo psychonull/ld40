@@ -1,21 +1,10 @@
 import {getCells, mapGrid} from '../game/grid/grid.js'
 
-let emptyCell = {
-  // x: 0,
-  // y: 0,
-  // width: 0,
-  // height: 0,
-  // style: {
-  //   fill: '#333',
-  //   stroke: '#555'
-  // }
-}
-
 let initialGrid = {
   cellSize: 80,
   rows: 8,
   cols: 10,
-  cells: getCells({rows: 8, cols: 10})(emptyCell)
+  cells: getCells({rows: 8, cols: 10})({})
 }
 
 let gameState = (state = 'LOADING', action) => {
@@ -24,14 +13,6 @@ let gameState = (state = 'LOADING', action) => {
     default: return state
   }
 }
-
-/*
-let cell = (state = emptyCell, action) => {
-  switch (action.type) {
-    default: return state
-  }
-}
-*/
 
 let initialControls = {gridMouseDown: false}
 
@@ -46,14 +27,13 @@ let controls = (state = initialControls, action) => {
 
 let grid = (state = initialGrid, action) => {
   switch (action.type) {
-    case 'GRID_SET_PENDING': return {...state, cells: action.payload}
-    /*
-    case 'GRID_SET_PENDING': return {...state,
-      cells: mapGrid((cell, x, y) =>
-        action.payload.x === x && action.payload.y === y ? {...cell, isPreBelt: true} : cell,
-        state.cells)
+    case 'GRID_UPDATE_PENDING_PATH': {
+      let newState = mapGrid(cell => ({...cell, isPreBelt: false}))(state.cells)
+      action.payload.forEach(([y, x]) => {
+        newState[x][y] = {...newState[x][y], isPreBelt: true}
+      })
+      return {...state, cells: newState}
     }
-    */
     default: return state
   }
 }

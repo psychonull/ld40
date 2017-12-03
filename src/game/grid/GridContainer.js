@@ -1,42 +1,29 @@
 import {connect} from 'react-redux'
+import isEqual from 'lodash/isEqual'
 import GridComponent from './GridComponent'
-import {mapPosition, mapGrid} from './grid'
-import PF from 'pathfinding'
+import {mapPosition, mapGrid, findPath} from './grid'
 
-let isDragActive = getState => getState().controls.gridMouseDown
+let getControls = getState => getState().controls
+let isDragActive = getState => getControls(getState).gridMouseDown
+
 let getCellPosition = (e, getState) => {
   let cellEl = e.target
   if (!cellEl || cellEl.tagName.toLowerCase() !== 'rect') return {}
-
-  let {cellSize} = getState().grid
-  let x = cellEl.getAttribute('x')
-  let y = cellEl.getAttribute('y')
-  return mapPosition(cellSize, {x, y})
+  return mapPosition(getState().grid.cellSize, {x: cellEl.getAttribute('x'), y: cellEl.getAttribute('y')})
 }
 
 let onMouseOver = e => (dispatch, getState) => {
   if (isDragActive(getState)) {
     let payload = getCellPosition(e, getState)
+
     if (payload) {
-
-      let startAt = getState().controls.gridMouseStartAt || {}
-      let lastAt = getState().controls.gridMouseAt || {}
-      if (startAt.x === payload.x && startAt.y === payload.y && lastAt.x === payload.x && lastAt.y === payload.y) {
-        return
-      }
-
-      dispatch({type: 'GRID_MOUSE_DOWN_MOVE', payload})
-
-      let cells = mapGrid(() => 0)(getState().grid.cells)
-      var finder = new PF.BestFirstFinder()
-      var grid = new PF.Grid(cells)
-
-      var path = finder.findPath(startAt.x, startAt.y, payload.x, payload.y, grid)
-      let update = mapGrid(cell => ({...cell, isPreBelt: false}))(getState().grid.cells)
-      path.forEach(([y, x]) => {
-        update[x][y] = {...update[x][y], isPreBelt: true}
+      let {gridMouseStartAt, gridMouseAt} = getControls(getState)
+      if (isEqual(payload, gridMouseStartAt) || isEqual(payload, gridMouseAt)) return
+      dispatch({
+        type: 'GRID_UPDATE_PENDING_PATH',
+        payload: findPath(gridMouseStartAt, payload, mapGrid(() => 0)(getState().grid.cells))
       })
-      dispatch({type: 'GRID_SET_PENDING', payload: update})
+      dispatch({type: 'GRID_MOUSE_DOWN_MOVE', payload})
     }
   }
 }
